@@ -90,8 +90,3 @@ for url in spire_linkedin_urls:
     with open('spire-member-list.csv', 'a', encoding='UTF8', newline='') as f:
         writer = csv.writer(f)
         writer.writerow(data_row)
-
-
-
-
-
