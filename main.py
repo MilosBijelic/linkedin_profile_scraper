@@ -1,3 +1,4 @@
+import pdb
 import re
 import time
 import csv
@@ -13,11 +14,11 @@ class LinkedinScraper():
         # This instance will be used to log into LinkedIn
         self.email = input('What is your email?\n')
         self.password = input('What is your password?\n')
-    # create
+
     def _create_csv(self):
         # Creates .csv file to write to
         headers = ['Name', 'Job Title', 'Company']
-        with open('spire-member-list.csv', 'a', encoding='UTF8', newline='') as f:
+        with open('spire-member-info.csv', 'a', encoding='utf-8-sig', newline='') as f:
             writer = csv.writer(f)
             writer.writerow(headers)
 
@@ -60,6 +61,7 @@ class LinkedinScraper():
             # Opens up the URL
             self.driver.get(url)
 
+            time.sleep(5)
             # Stores the source code of the webpage
             src = self.driver.page_source
             soup = BeautifulSoup(src, 'lxml')
@@ -98,14 +100,17 @@ class LinkedinScraper():
                 data_row.append(company.group(2))
 
             # write the users info to the .csv
-            with open('spire-member-list.csv', 'a', encoding='UTF8', newline='') as f:
+            with open('spire-member-info.csv', 'a', encoding='utf-8-sig', newline='') as f:
                 writer = csv.writer(f)
                 writer.writerow(data_row)
 
 
-
 if __name__ == "__main__":
-    url_list = ['https://www.linkedin.com/in/milosbijelic', 'https://www.linkedin.com/in/filip-o-8bb46a52']
+    # Get list of URLs from .csv
+    with open('spire_urls.csv',  encoding='utf-8-sig', newline='') as f:
+        reader = csv.reader(f)
+        url_list = list(reader)
+        url_list = [item for sublist in url_list for item in sublist]
 
     scraper = LinkedinScraper()
 
