@@ -11,7 +11,8 @@ class LinkedinScraper():
         # Creating a webdriver instance
         self.driver = webdriver.Chrome("C:/Users/milos.bijelic/Downloads/chromedriver_win32/chromedriver.exe")
         # This instance will be used to log into LinkedIn
-
+        self.email = input('What is your email?\n')
+        self.password = input('What is your password?\n')
     # create
     def _create_csv(self):
         # Creates .csv file to write to
@@ -38,16 +39,14 @@ class LinkedinScraper():
         # Find the Username box on the webpage
         username = self.driver.find_element(By.ID, "username")
 
-        # ENTER YOUR EMAIL ADDRESS HERE
-        username.send_keys("mbijelic.03@gmail.com")
+        username.send_keys(self.email)
 
         # Find the Password box on the webpage
         pword = self.driver.find_element(By.ID, "password")
         # In case of an error, try changing the element
         # tag used here.
 
-        # ENTER YOUR PASSWORD HERE
-        pword.send_keys("MilosBij1996")
+        pword.send_keys(self.password)
 
         # Clicking on the login button
         self.driver.find_element(By.CLASS_NAME, "login__form_action_container").click()
